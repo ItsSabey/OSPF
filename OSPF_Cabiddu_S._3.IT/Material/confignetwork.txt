@@ -1,0 +1,148 @@
+Would you like to enter the initial configuration dialog? [yes/no]: no
+
+
+Press RETURN to get started!
+
+
+
+Router>enable
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R4
+R4(config)#interface gigabitEthernet 0/0
+R4(config-if)#hostname R1
+R1(config)#
+R1(config)#interface gigabitEthernet 0/0
+R1(config-if)#!!
+R1(config-if)#
+R1(config-if)#!
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#
+R1#
+R1#
+R1#enable
+R1#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#hostname R1
+R1(config)#interface gigabitEthernet 0/0
+R1(config-if)#ip address 192.168.1.1 255.255.255.0
+R1(config-if)#no shutdown
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+R1(config-if)#
+R1(config-if)#!
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#copy running-configuration startup-configuration
+                              ^
+% Invalid input detected at '^' marker.
+	
+R1#copy running-config startup-config
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R1#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0     192.168.1.1     YES manual up                    down 
+GigabitEthernet0/1     unassigned      YES unset  administratively down down 
+Serial0/0/0            unassigned      YES unset  administratively down down 
+Serial0/0/1            unassigned      YES unset  administratively down down 
+Vlan1                  unassigned      YES unset  administratively down down
+R1#show running-config
+Building configuration...
+
+Current configuration : 760 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R1
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO1941/K9 sn FTX15247KCJ-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
+
+R1#

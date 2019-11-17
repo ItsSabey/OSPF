@@ -1,0 +1,52 @@
+no shutdown --> shutdown turns the interface off. no shutdown turns the interface on
+--------------------------------------------------------------------------------------------------------------------------------
+Saving Configuration Changes
+Whenever you make changes to the RPM configuration, you must save the changes to memory so they will not be lost if the system is rebooted. There are two types of configuration files: the running (current operating) configuration and the startup configuration. The running configuration is stored in RAM; the startup configuration is stored in NVRAM.
+To display the current running configuration, enter the show running-config command. Enter the copy running-config startup-config command to save the current running configuration to the startup configuration file in NVRAM.
+--------------------------------------------------------------------------------------------------------------------------------
+
+Wildcard mask --> A wildcard mask is a mask of bits that indicates which parts of an IP address are available for examination. In the Cisco IOS they are used in several places, for example:
+To indicate the size of a network or subnet for some routing protocols, such as OSPF
+
+172.12.12.0 /28 
+
+To determine the wildcard mask in seconds, just invert the subnet mask, and that gives you the wildcard mask.   The subnet mask on the interfaces was /28, or 1111111 11111111  11111111  11110000.  Just change those zeroes to ones and ones to zeroes, and you have 00000000  00000000  00000000  00001111, your wildcard mask.
+---------------------------------------------------------------------------------------------------------------------------------
+Wildcards:
+
+172.16.1.0/30
+
+Netmask 
+255.255.255.252 = 30
+11111111 . 11111111 . 11111111 . 11111100
+
+Wildcard
+0.0.0.3
+00000000 . 00000000 . 00000000 . 00000011
+-------------------------
+0.0.0.3
+
+
+192.168.1.0/24
+
+Netmask
+255.255.255.0 = 24 
+11111111 . 11111111 . 11111111 . 00000000
+Wildcard 0.0.0.255
+00000000 . 00000000 . 00000000 . 11111111
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+In larger modular devices, you'll get card/slot/port numbers (Serial 0/0/0)
+
+serial 0 = port number
+
+serial 0/0 = slot/portnumber
+
+serial0/0/0= card/slot/portnumber
+
+---------------------------------------------------------------------------------------------------------------------------------
+R2(config-router)#passive-interface gigabitEthernet 0/0
+
+Passive-interface command is used in all routing protocols to disable sending updates out from a specific interface. However the command behavior varies from o­ne protocol to another.
+In OSPF the passive-interface has a similar behavior to EIGRP. The command suppresses hello packets and hence neighbor relationships.
