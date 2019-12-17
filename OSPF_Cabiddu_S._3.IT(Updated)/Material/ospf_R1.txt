@@ -1,0 +1,223 @@
+R1(config-router)#do show ip route connected
+ C   172.16.1.0/30  is directly connected, Serial0/0/0
+ C   192.168.1.0/24  is directly connected, GigabitEthernet0/0
+
+R1(config-router)#network  172.16.1.0/30 ?
+% Unrecognized command
+R1(config-router)#network  172.16.1.0?
+A.B.C.D  
+R1(config-router)#network  172.16.1.0 0.0.0.3
+% Incomplete command.
+R1(config-router)#172.16.1.0 0.0.0.3 area?
+% Unrecognized command
+R1(config-router)#172.16.1.0 0.0.0.3 area ?
+% Unrecognized command
+R1(config-router)#172.16.1.0 0.0.0.3 area ?
+% Unrecognized command
+R1(config-router)#network 172.16.1.0 0.0.0.3  
+% Incomplete command.
+R1(config-router)#%network 172.16.1.0 0.0.0.3 ?
+% Unrecognized command
+R1(config-router)#%network 172.16.1.0 0.0.0.3 area?
+% Unrecognized command
+R1(config-router)#%network 172.16.1.0 0.0.0.3 ?
+% Unrecognized command
+R1(config-router)#%network 172.16.1.0 0.0.0.3 
+                  ^
+% Invalid input detected at '^' marker.
+	
+R1(config-router)#network 172.16.1.0 0.0.0.3 ?
+  area  Set the OSPF area ID
+R1(config-router)#network 172.16.1.0 0.0.0.3 area ?
+  <0-4294967295>  OSPF area ID as a decimal value
+  A.B.C.D         OSPF area ID in IP address format
+R1(config-router)#network 172.16.1.0 0.0.0.3 area 0
+R1(config-router)#network 192.168.1.0 
+% Incomplete command.
+R1(config-router)#network 192.168.1.0 ?
+  A.B.C.D  OSPF wild card bits
+R1(config-router)#network 192.168.1.0 0.0.0.255 area 0
+R1(config-router)#passive-interface gigabitEthernet 0/0
+R1(config-router)#!
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#show running-config
+Building configuration...
+
+Current configuration : 943 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R1
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO1941/K9 sn FTX15240J1N-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ ip address 172.16.1.1 255.255.255.252
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 1.1.1.1
+ log-adjacency-changes
+ passive-interface GigabitEthernet0/0
+ network 172.16.1.0 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
+
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#
+R1#show ip protocols
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 1.1.1.1
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    172.16.1.0 0.0.0.3 area 0
+    192.168.1.0 0.0.0.255 area 0
+  Passive Interface(s): 
+    GigabitEthernet0/0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:03:51
+  Distance: (default is 110)
+
+R1#
+00:28:14: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on Serial0/0/0 from LOADING to FULL, Loading Done
+
+R1#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     172.16.0.0/16 is variably subnetted, 3 subnets, 2 masks
+C       172.16.1.0/30 is directly connected, Serial0/0/0
+L       172.16.1.1/32 is directly connected, Serial0/0/0
+O       172.16.1.4/30 [110/128] via 172.16.1.2, 00:02:38, Serial0/0/0
+     192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.1.0/24 is directly connected, GigabitEthernet0/0
+L       192.168.1.1/32 is directly connected, GigabitEthernet0/0
+O    192.168.2.0/24 [110/65] via 172.16.1.2, 00:01:58, Serial0/0/0
+
+R1#show ip route ospf
+     172.16.0.0/16 is variably subnetted, 3 subnets, 2 masks
+O       172.16.1.4 [110/128] via 172.16.1.2, 00:04:05, Serial0/0/0
+O    192.168.2.0 [110/65] via 172.16.1.2, 00:03:25, Serial0/0/0
+
+R1#
+
+
+
+
+
+
+
+
+R1 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
